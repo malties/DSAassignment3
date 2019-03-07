@@ -129,8 +129,31 @@ class Tree<Item extends Comparable<Item>> {
      *  @return the element found at the position
      */
     public Item nthBFS(int n) {
-        throw new UnsupportedOperationException();
+        if (root ==null){
+            throw new IllegalArgumentException("Index out of bounds, you jerk!");
+        }
+        if (n==0){
+            return root.el;
+        }
+        Queue<Node<Item>> myQueue = new LinkedList <>();
+        Node<Item> currentNode = root;
+
+        for (int i = 0; i<n;i++){
+            if(currentNode.left!=null){
+                myQueue.add(currentNode.left);
+            }
+            if (currentNode.right!=null){
+                myQueue.add(currentNode.right);
+            }
+            currentNode = myQueue.remove();
+        }
+
+        return currentNode.el;
+
     }
+
+
+
     /**
      *  Hands on session 7, exercise 2. Prints the labels of the tree's
      nodes in
@@ -150,7 +173,29 @@ class Tree<Item extends Comparable<Item>> {
      *
      */
     public Item nthDFS(int n) {
-        throw new UnsupportedOperationException();
+        Stack <Node<Item>> myStack = new Stack <>();
+        if (root==null){
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
+        myStack.push(root);
+        int indexCount = 0;
+        Node<Item> currentNode = root;
+
+        while(!myStack.empty()){
+            currentNode = myStack.pop();
+            if (indexCount==n){
+                return currentNode.el;
+            }
+            if(currentNode.right !=null){
+                myStack.push(currentNode.right);
+            }
+
+            if(currentNode.left !=null){
+                myStack.push(currentNode.left);
+            }
+            indexCount++;
+        }
+        throw new IllegalArgumentException("Index out of bounds");
     }
     /**
      *  Assignment 3 Question 8. Prints the nodes of the tree in depth-
@@ -168,9 +213,25 @@ class Tree<Item extends Comparable<Item>> {
      *  @return a string representation of the tree in DFS order
      */
     public String toStringDFS() {
-        throw new UnsupportedOperationException();
-// StringBuilder sb = new StringBuilder();
-// return sb.toString();
+
+        Stack<Node<Item>> myStack = new Stack <>();
+        if (root==null){
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
+        myStack.add(root);
+        Node<Item> currentNode = root;
+        String result = "";
+
+        while(!myStack.empty()){
+            currentNode = myStack.pop();
+            if (currentNode.right !=null){
+                myStack.push(currentNode.right);
+            }if(currentNode.left !=null){
+                myStack.push(currentNode.left);
+            }
+            result += currentNode.el.toString()+ "\n";
+        }
+        return result;
     }
     /**
      *  Assignment 3, Question 9. Insert i into a binary search tree
