@@ -239,7 +239,27 @@ class Tree<Item extends Comparable<Item>> {
      *  @param i the Item to insert
      */
     public void insertBST(Item i) {
-        throw new UnsupportedOperationException();
+
+        root = insertRec(root, i);
+    }
+
+    Node insertRec(Node node, Item i) {
+
+        if (node== null) {
+            Node n = new Node<Item>();
+            n.el = i;
+            return n;
+        }
+
+        if (Integer.parseInt(i.toString())<=Integer.parseInt(node.el.toString())){
+            node.left = insertRec(node.left, i);
+        }
+        else if (Integer.parseInt(i.toString())>Integer.parseInt(node.el.toString())) {
+            node.right = insertRec(node.right, i);
+        }
+
+        return node;
+
     }
     /**
      *  Hands on session 7, exercise 3. Removes one item from a binary
